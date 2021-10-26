@@ -1,0 +1,31 @@
+
+# This is a basic workflow to help you get started with Actions
+
+name: TestLatest
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          npm i -g npm-cli-login
+          docker run \
+            -d \
+            -p 4873:4873 \
+            -v "$GITHUB_WORKSPACE/packages/cli-e2e/docker/config:/verdaccio/conf" \
+            verdaccio/verdaccio:latest
+          while ! timeout 1 bash -c "echo > /dev/tcp/localhost/4873"; do sleep 10; done
+          npm config set registry http://localhost:4873    
+          npm-cli-login -u anakinskywalker -p IdontlikesandItsallcoarseandroughandirritatingAnditgetseverywhere -e vader@deathst.ar
