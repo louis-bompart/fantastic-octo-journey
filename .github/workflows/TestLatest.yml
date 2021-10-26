@@ -24,7 +24,7 @@ jobs:
           docker run \
             -d \
             -p 4873:4873 \
-            -v "$GITHUB_WORKSPACE/packages/cli-e2e/docker/config:/verdaccio/conf" \
+            -v "$GITHUB_WORKSPACE/verdaccio/conf:/verdaccio/conf" \
             verdaccio/verdaccio:latest
           while ! timeout 1 bash -c "echo > /dev/tcp/localhost/4873"; do sleep 10; done
           npm config set registry http://localhost:4873    
