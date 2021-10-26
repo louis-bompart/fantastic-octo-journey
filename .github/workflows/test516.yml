@@ -19,6 +19,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
+          npm i -g npm-cli-login
           docker run \
             -d \
             -p 4873:4873 \
@@ -26,4 +27,4 @@ jobs:
             verdaccio/verdaccio:5.1.6
           while ! timeout 1 bash -c "echo > /dev/tcp/localhost/4873"; do sleep 10; done
           npm config set registry http://localhost:4873    
-          npx npm-cli-login -u anakinskywalker -p ihatesand -e vader@deathst.ar
+          npm-cli-login -u anakinskywalker -p ihatesand -e vader@deathst.ar
